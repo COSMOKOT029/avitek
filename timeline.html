@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Архивные сравнения — ЗаводВремени</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ========== Верхнее меню ========== -->
+<header class="topbar">
+  <div class="brand">
+    <img src="assets/img/logo2.png" alt="Логотип">
+    <div class="brand-text">AR-реконструкция исторического облика завода «ЗаводВремени»</div>
+  </div>
+  <nav>
+    <a href="index.html" >Галерея</a>
+    <a href="compare.html">Сравнения</a>
+    <a href="timeline.html"class="active" >Шкала</a>
+    <a href="partners.html">Партнёры</a>
+    <a href="about.html">О компании</a>
+  </nav>
+</header>
+
+<!-- ========== Контент ========== -->
+<main class="tl-page">
+
+  <h1>Временная шкала</h1>
+
+  <!-- Выбор объекта -->
+  <select id="tlSelect" class="cmp-select"></select>
+
+  <!-- Заголовок текущего объекта -->
+  <h2 id="tlTitle" style="color: var(--accent);"></h2>
+
+  <!-- Фотография -->
+  <div class="tl-photo-box">
+    <img id="tlPhoto" src="" alt="Фотография по годам">
+  </div>
+
+  <!-- Подпись с годом -->
+  <div class="tl-caption" id="tlCaption"></div>
+
+  <!-- Кнопки годов — заполняются через JS -->
+  <div class="years" id="yearsBar"></div>
+
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/timeline.js"></script>
+
+<footer class="footer">
+  <div class="footer-inner">
+
+    <div>
+      <h4>О проекте</h4>
+      <p>Цифровой музей «ЗаводВремени» — AR-реконструкция исторического облика промышленного наследия.</p>
+    </div>
+
+    <div>
+      <h4>Навигация</h4>
+      <p>
+        <a href="index.html">Галерея</a><br>
+        <a href="compare.html">Архивные сравнения</a><br>
+        <a href="timeline.html">Временная шкала</a><br>
+        <a href="partners.html">Партнёры</a><br>
+        <a href="about.html">О компании</a>
+      </p>
+    </div>
+
+    <div>
+      <h4>Контакты</h4>
+      <p>
+        📧 info@zavodvremeni.ru<br>
+        📞 +7 (XXX) XXX-XX-XX
+      </p>
+      <div class="social-icons">
+        <a href="https://vk.com/" target="_blank" title="ВКонтакте">✦</a>
+        <a href="https://t.me/" target="_blank" title="Telegram">✈</a>
+        <a href="mailto:info@zavodvremeni.ru" title="Email">✉</a>
+        <a href="https://youtube.com/" target="_blank" title="YouTube">▶</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer-bottom">
+    © 2025 ЗаводВремени · Все права защищены
+  </div>
+</footer>
+
+</body>
+</html>

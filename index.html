@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Галерея — ЗаводВремени</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="assets/img/logo2.png" alt="Логотип">
+    <div class="brand-text">AR-реконструкция исторического облика завода «ЗаводВремени»</div>
+  </div>
+  <nav>
+    <a href="index.html" class="active">Галерея</a>
+    <a href="compare.html">Сравнения</a>
+    <a href="timeline.html">Шкала</a>
+    <a href="partners.html">Партнёры</a>
+    <a href="about.html">О компании</a>
+  </nav>
+</header>
+
+<main class="layout">
+
+  <aside class="sidebar">
+    <h3>Объекты</h3>
+    <ul id="siteList"></ul>
+  </aside>
+
+  <section class="stage">
+    <div class="screen">
+      <img id="mainPhoto" src="" alt="Фотография объекта">
+    </div>
+
+    <div class="controls">
+      <button id="prevBtn" title="Предыдущий">&lt;</button>
+      <button id="playBtn" title="Прослушать описание">▶</button>
+      <button id="nextBtn" title="Следующий">&gt;</button>
+    </div>
+
+    <div class="info">
+      <h2 id="objTitle">—</h2>
+      <p id="objText">Выберите объект из списка слева.</p>
+    </div>
+  </section>
+
+</main>
+
+<audio id="narration"></audio>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <h4>О проекте</h4>
+      <p>Цифровой музей «ЗаводВремени» — AR-реконструкция исторического облика промышленного наследия.</p>
+    </div>
+    <div>
+      <h4>Навигация</h4>
+      <p>
+        <a href="index.html">Галерея</a><br>
+        <a href="compare.html">Архивные сравнения</a><br>
+        <a href="timeline.html">Временная шкала</a><br>
+        <a href="partners.html">Партнёры</a><br>
+        <a href="about.html">О компании</a>
+      </p>
+    </div>
+    <div>
+      <h4>Контакты</h4>
+      <p>
+        📧 info@zavodvremeni.ru<br>
+        📞 +7 (XXX) XXX-XX-XX
+      </p>
+      <div class="social-icons">
+        <a href="https://vk.com/" target="_blank" title="ВКонтакте">✦</a>
+        <a href="https://t.me/" target="_blank" title="Telegram">✈</a>
+        <a href="mailto:info@zavodvremeni.ru" title="Email">✉</a>
+        <a href="https://youtube.com/" target="_blank" title="YouTube">▶</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 ЗаводВремени · Все права защищены</div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
