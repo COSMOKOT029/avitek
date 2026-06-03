@@ -606,15 +606,6 @@ a { color: inherit; text-decoration: none; }
   50%      { box-shadow: 0 4px 20px rgba(255,255,255,0.6); }
 }
 
-/* мягкое появление картинок */
-img {
-  animation: imgFade 0.6s ease-out;
-}
-
-@keyframes imgFade {
-  from { opacity: 0; filter: blur(4px); }
-  to   { opacity: 1; filter: blur(0); }
-}
 
 /* блестящая полоса при наведении на карточку партнёра */
 .partner-card {
@@ -739,4 +730,322 @@ img {
 
 .slider-handle::after {
   transition: all 0.2s;
+}
+
+/* ============================================================
+   УНИВЕРСАЛЬНЫЕ СТИЛИ — работают для любой верстки
+   (select, кнопки годов, заголовки сравнения/шкалы)
+   ============================================================ */
+
+/* --- Красивый выпадающий список выбора объекта --- */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--primary);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 40px 10px 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: all 0.25s;
+  /* стрелочка */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+select:hover {
+  background-color: var(--primary-d);
+  transform: translateY(-2px);
+}
+
+select:focus { outline: 3px solid var(--primary-l); }
+
+select option {
+  background: #fff;
+  color: var(--text);
+}
+
+/* --- Кнопки годов на временной шкале --- */
+/* Ловим любые кнопки внутри страниц (button, .year-btn) */
+.tl-years, .year-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+button.year, .year-btn, .tl-years button, .year-buttons button {
+  padding: 10px 22px;
+  font-size: 16px;
+  font-weight: 700;
+  border: 2px solid var(--primary);
+  border-radius: 30px;
+  background: #fff;
+  color: var(--primary-d);
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 2px 8px rgba(106,61,232,0.12);
+}
+
+button.year:hover, .year-btn:hover,
+.tl-years button:hover, .year-buttons button:hover {
+  background: var(--primary-l);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px var(--shadow);
+}
+
+button.year.active, .year-btn.active,
+.tl-years button.active, .year-buttons button.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 6px 18px var(--shadow);
+  transform: scale(1.05);
+}
+
+/* --- Заголовки страниц --- */
+h1 {
+  color: var(--primary-d);
+}
+
+/* --- Контейнер контента, если страница БЕЗ сайдбара --- */
+.simple-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 50px;
+  flex: 1;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* подпись под фото (Проходная — 1935 год) */
+.tl-caption, .photo-caption {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--primary-d);
+  margin-top: 14px;
+}
+
+/* подзаголовок-инструкция (Перетащите ползунок...) */
+.hint-text {
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 12px;
+}
+
+/* --- ползунок диапазона (range) — фиолетовый --- */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: var(--primary-l);
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  background: var(--primary);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 3px 10px var(--shadow);
+  transition: transform 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+input[type="range"]::-moz-range-thumb {
+  width: 22px; height: 22px;
+  background: var(--primary);
+  border: 3px solid #fff;
+  border-radius: 50%;
+}
+
+/* ============================================================
+   ПОЛИРОВКА v2 — сравнения, шкала, футер-иконки
+   ============================================================ */
+
+/* ---------- Обёртки страниц без сайдбара ---------- */
+.compare-page,
+.tl-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 24px 50px;
+  flex: 1;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.compare-page h1,
+.tl-page h1 { margin-bottom: 24px; }
+
+/* отступ под селектором объекта */
+.cmp-select { margin: 0 auto 26px; }
+
+/* ---------- СРАВНЕНИЯ: переопределяем размеры ---------- */
+.compare {
+  display: block;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 10;
+  max-height: none;
+  cursor: ew-resize;
+}
+
+/* оба фото занимают всю область одинаково */
+.compare > .now,
+.old-wrap > .old {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+}
+
+/* старое фото внутри обёртки = ширина всего контейнера (задаётся из JS) */
+.old-wrap {
+  width: 50%;
+  border-right-width: 4px;
+}
+.old-wrap > .old {
+  width: var(--cmp-w, 880px);
+}
+
+/* метки «Архив / Сегодня» */
+.cmp-label {
+  position: absolute;
+  top: 14px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(26, 16, 51, 0.6);
+  border-radius: 20px;
+  z-index: 6;
+  pointer-events: none;
+  line-height: 1.2;
+  backdrop-filter: blur(2px);
+}
+.cmp-label.old { left: 14px; }
+.cmp-label.now { right: 14px; }
+
+/* ползунок под картинкой */
+#slider {
+  display: block;
+  width: 100%;
+  max-width: 880px;
+  margin: 24px auto 6px;
+}
+
+/* ---------- ШКАЛА: фикс кнопок годов ---------- */
+.tl-page h2 {
+  margin: 8px 0 18px;
+  font-size: 22px;
+}
+
+.tl-page .tl-photo-box {
+  max-width: 760px;
+  max-height: none;
+  aspect-ratio: 4 / 3;
+}
+.tl-page .tl-photo-box img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+}
+
+.tl-caption { margin-bottom: 22px; }
+
+/* контейнер годов — центр + крупные кнопки */
+.years {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+/* применяем тот же красивый стиль, что у .tl-years button */
+.years button {
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  border: 2px solid var(--primary);
+  border-radius: 30px;
+  background: #fff;
+  color: var(--primary-d);
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 2px 8px rgba(106,61,232,0.12);
+}
+.years button:hover {
+  background: var(--primary-l);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px var(--shadow);
+}
+.years button.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 6px 18px var(--shadow);
+  transform: scale(1.05);
+}
+.years button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: #ccc;
+  color: var(--muted);
+  background: #f3f1f8;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---------- ФУТЕР: SVG-иконки ---------- */
+.social-icons a svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  transition: fill 0.25s;
+}
+.social-icons a:hover svg { fill: var(--primary-d); }
+
+/* строки контактов (email / телефон) */
+.footer .contact-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+}
+.footer .contact-line svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--gold);
+  flex-shrink: 0;
+}
+.footer .contact-line a:hover { color: var(--gold); }
+
+/* адаптив для новых страниц */
+@media (max-width: 768px) {
+  .compare { aspect-ratio: 4 / 3; }
+}
+/* ============================================================
+   ФИКС «ДЫМКИ» — отключаем глобальную анимацию imgFade
+   для картинок, которыми управляет JS (сравнения и шкала).
+   Плавность задаётся через transition: opacity в JS.
+   ============================================================ */
+
+.compare > img,
+.old-wrap > img,
+#tlPhoto {
+  animation: none !important;   /* убираем imgFade с blur */
+  filter: none !important;      /* гарантированно без размытия */
+  opacity: 1;                   /* стартовое состояние — видимое */
+  transition: opacity 0.35s ease;
 }

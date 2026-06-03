@@ -1,18 +1,21 @@
 /* ============================================================
    АРХИВНЫЕ СРАВНЕНИЯ
    Слайдер сравнивает два изображения одного объекта:
-   старое и современное.
+   старое (архив) и современное.
    ============================================================ */
 
-const sel      = document.getElementById('cmpSelect');
-const nowImg   = document.getElementById('nowImg');
-const oldImg   = document.getElementById('oldImg');
-const oldWrap  = document.getElementById('oldWrap');
-const slider   = document.getElementById('slider');
+const sel     = document.getElementById('cmpSelect');
+const nowImg  = document.getElementById('nowImg');
+const oldImg  = document.getElementById('oldImg');
+const oldWrap = document.getElementById('oldWrap');
+const slider  = document.getElementById('slider');
+const handle  = document.getElementById('handle');
+const cmp     = document.getElementById('cmp');
 
-/* ---------- Заполняем dropdown списком объектов ---------- */
+/* ---------- Заполняем dropdown (только объекты с архивом) ---------- */
 function buildSelect() {
   SITES.forEach((s, i) => {
+    if (!s.archive) return;            // пропускаем объекты без пары «было/стало»
     const opt = document.createElement('option');
     opt.value = i;
     opt.textContent = s.title;
@@ -20,10 +23,24 @@ function buildSelect() {
   });
 }
 
+/* ---------- Установить положение шторки (в процентах) ---------- */
+function setPosition(pct) {
+  pct = Math.max(0, Math.min(100, pct));
+  oldWrap.style.width = pct + '%';
+  handle.style.left   = pct + '%';
+  slider.value = pct;
+}
+
+/* ---------- Подгоняем ширину старого фото под контейнер ---------- */
+function syncWidth() {
+  const w = cmp.clientWidth;
+  if (w) cmp.style.setProperty('--cmp-w', w + 'px');
+}
+
 /* ---------- Загрузка пары изображений ---------- */
 function loadCompare(i) {
   const s = SITES[i];
-  if (!s.archive) return;
+  if (!s || !s.archive) return;
 
   // плавная смена
   nowImg.style.opacity = 0;
@@ -36,10 +53,10 @@ function loadCompare(i) {
     oldImg.style.opacity = 1;
   }, 200);
 
-  // выравниваем ширину старого фото под ширину нового
-  // (важно для корректного отображения внутри overflow:hidden)
+  // когда новое фото загрузилось — пересчитываем ширину и сбрасываем шторку на центр
   nowImg.onload = () => {
-    oldImg.style.width = nowImg.offsetWidth + 'px';
+    syncWidth();
+    setPosition(50);
   };
 }
 
@@ -47,35 +64,36 @@ function loadCompare(i) {
 sel.addEventListener('change', e => loadCompare(+e.target.value));
 
 /* ---------- Реакция на ползунок ---------- */
-slider.addEventListener('input', e => {
-  oldWrap.style.width = e.target.value + '%';
-});
+slider.addEventListener('input', e => setPosition(+e.target.value));
 
-/* ---------- Дополнительно: перетаскивание мышью по самой картинке ---------- */
+/* ---------- Перетаскивание мышью прямо по картинке ---------- */
 let dragging = false;
-const cmp = document.getElementById('cmp');
 
 function setByEvent(clientX) {
   const rect = cmp.getBoundingClientRect();
-  let pct = ((clientX - rect.left) / rect.width) * 100;
-  pct = Math.max(0, Math.min(100, pct));
-  oldWrap.style.width = pct + '%';
-  slider.value = pct;
+  const pct = ((clientX - rect.left) / rect.width) * 100;
+  setPosition(pct);
 }
 
-cmp.addEventListener('mousedown',  e => { dragging = true;  setByEvent(e.clientX); });
+cmp.addEventListener('mousedown', e => { dragging = true; setByEvent(e.clientX); });
 window.addEventListener('mousemove', e => { if (dragging) setByEvent(e.clientX); });
 window.addEventListener('mouseup',   () => dragging = false);
 
-// поддержка тач-экранов
-cmp.addEventListener('touchstart', e => setByEvent(e.touches[0].clientX), {passive:true});
-cmp.addEventListener('touchmove',  e => setByEvent(e.touches[0].clientX), {passive:true});
+/* ---------- Поддержка тач-экранов ---------- */
+cmp.addEventListener('touchstart', e => setByEvent(e.touches[0].clientX), { passive: true });
+cmp.addEventListener('touchmove',  e => setByEvent(e.touches[0].clientX), { passive: true });
 
 /* ---------- Пересчёт при изменении окна ---------- */
 window.addEventListener('resize', () => {
-  oldImg.style.width = nowImg.offsetWidth + 'px';
+  syncWidth();
+  setPosition(slider.value);
 });
 
 /* ---------- Старт ---------- */
 buildSelect();
-loadCompare(0);
+// выбираем первый объект, у которого есть архив
+const firstIdx = SITES.findIndex(s => s.archive);
+if (firstIdx >= 0) {
+  sel.value = firstIdx;
+  loadCompare(firstIdx);
+}

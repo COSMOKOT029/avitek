@@ -1,90 +1,87 @@
 /* ============================================================
    ВРЕМЕННАЯ ШКАЛА
-   Показывает, как менялся выбранный объект в разные годы.
-   Список годов берётся из TIMELINE_YEARS (data.js).
+   Показывает один объект в разные годы.
+   В data.js timeline — это ОБЪЕКТ вида { год: 'путь/к/фото' }.
    ============================================================ */
 
-const tlSelect  = document.getElementById('tlSelect');
+const tlSel     = document.getElementById('tlSelect');
 const tlTitle   = document.getElementById('tlTitle');
 const tlPhoto   = document.getElementById('tlPhoto');
 const tlCaption = document.getElementById('tlCaption');
 const yearsBar  = document.getElementById('yearsBar');
 
-let currentSite = 0;
-let currentYear = TIMELINE_YEARS[0];
+let currentSite = null;   // текущий объект
 
-/* ---------- Заполняем dropdown списком объектов ---------- */
+/* Есть ли у объекта непустая шкала */
+function hasTimeline(s) {
+  return s.timeline && Object.keys(s.timeline).length > 0;
+}
+
+/* ---------- Заполняем dropdown (только объекты со шкалой) ---------- */
 function buildSelect() {
   SITES.forEach((s, i) => {
+    if (!hasTimeline(s)) return;       // пропускаем объекты без годов
     const opt = document.createElement('option');
     opt.value = i;
     opt.textContent = s.title;
-    tlSelect.appendChild(opt);
+    tlSel.appendChild(opt);
   });
 }
 
-/* ---------- Создаём кнопки годов ---------- */
-function buildYears() {
-  yearsBar.innerHTML = '';
-  TIMELINE_YEARS.forEach(year => {
-    const btn = document.createElement('button');
-    btn.textContent = year;
-    btn.dataset.year = year;
-    btn.addEventListener('click', () => showYear(year));
-    yearsBar.appendChild(btn);
-  });
-}
-
-/* ---------- Показ конкретного года ---------- */
-function showYear(year) {
-  const site = SITES[currentSite];
-  const src  = site.timeline[year];
-
-  if (!src) {
-    tlCaption.textContent = `Нет фотографии для ${year} года`;
-    return;
-  }
-
-  currentYear = year;
-
-  // плавная смена
+/* ---------- Показать конкретный год ---------- */
+function showYear(year, img, btn) {
+  // плавная смена фото
   tlPhoto.style.opacity = 0;
   setTimeout(() => {
-    tlPhoto.src = src;
-    tlPhoto.alt = `${site.title}, ${year} год`;
+    tlPhoto.src = img;
     tlPhoto.style.opacity = 1;
-  }, 300);
+  }, 200);
 
-  tlCaption.textContent = `${site.title} — ${year} год`;
+  tlCaption.textContent = `${currentSite.title} — ${year} год`;
 
   // подсветка активной кнопки
-  document.querySelectorAll('.years button').forEach(b =>
-    b.classList.toggle('active', +b.dataset.year === year)
-  );
+  yearsBar.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+/* ---------- Построить кнопки годов для объекта ---------- */
+function buildYears(site) {
+  yearsBar.innerHTML = '';
+
+  // годы из ключей объекта, отсортированные по возрастанию
+  const years = Object.keys(site.timeline)
+    .map(Number)
+    .sort((a, b) => a - b);
+
+  years.forEach((year, idx) => {
+    const img = site.timeline[year];
+    const btn = document.createElement('button');
+    btn.textContent = year;
+    btn.addEventListener('click', () => showYear(year, img, btn));
+    yearsBar.appendChild(btn);
+
+    // первый (самый ранний) год показываем сразу
+    if (idx === 0) showYear(year, img, btn);
+  });
 }
 
 /* ---------- Загрузка объекта ---------- */
 function loadSite(i) {
-  currentSite = i;
-  tlTitle.textContent = SITES[i].title;
-  // показать первый год, для которого есть фото
-  const firstYear = TIMELINE_YEARS.find(y => SITES[i].timeline[y]) || TIMELINE_YEARS[0];
-  showYear(firstYear);
+  const s = SITES[i];
+  if (!s || !hasTimeline(s)) return;
+
+  currentSite = s;
+  tlTitle.textContent = s.title;
+  buildYears(s);
 }
 
 /* ---------- Реакция на смену объекта ---------- */
-tlSelect.addEventListener('change', e => loadSite(+e.target.value));
-
-/* ---------- Клавиатура: стрелки переключают годы ---------- */
-document.addEventListener('keydown', e => {
-  const idx = TIMELINE_YEARS.indexOf(currentYear);
-  if (e.key === 'ArrowLeft'  && idx > 0)
-    showYear(TIMELINE_YEARS[idx - 1]);
-  if (e.key === 'ArrowRight' && idx < TIMELINE_YEARS.length - 1)
-    showYear(TIMELINE_YEARS[idx + 1]);
-});
+tlSel.addEventListener('change', e => loadSite(+e.target.value));
 
 /* ---------- Старт ---------- */
 buildSelect();
-buildYears();
-loadSite(0);
+const firstIdx = SITES.findIndex(hasTimeline);
+if (firstIdx >= 0) {
+  tlSel.value = firstIdx;
+  loadSite(firstIdx);
+}
