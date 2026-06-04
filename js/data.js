@@ -80,22 +80,12 @@ const SITES = [
     coords: { x: 45, y: 70 },
   },
 {
-    id: 'prohodnaya',
-    title: 'Проходная',
-    text: 'Фотография самой первой проходной завода',
-    photo: 'assets/img/21.jpg',
+    id: 'plane',
+    title: 'Стрелковые установки ИЛ-К6',
+    text: 'В 1949 году завод № 32 получает заказ на изготовление новых стрелковых установок Ил-К6. Установка предназначается для защиты задней полусферы кабины лётчика на реактивном бомбардировщике Ил-28 разработки главного конструктора С. В. Ильюшина.',
+    photo: 'assets/img/14.jpg',
     audio: 'assets/audio/gostiny.mp3',
-    coords: { x: 28, y: 42 },
-    archive: {
-      old: 'assets/img/21.jpg',
-      now: 'assets/img/23.jpg'
-    },
-    timeline: {
-      1935: 'assets/img/21.jpg',
-      1970: 'assets/img/3.jpg',
-      2015:'assets/img/22.JPG',
-      2026: 'assets/img/23.jpg'
-    }
+    coords: { x: 28, y: 42 }
   },
 ];
 
