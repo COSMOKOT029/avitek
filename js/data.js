@@ -13,9 +13,9 @@
 
 const SITES = [
   {
-    id: 'gostiny',
+    id: 'prohodnaya',
     title: 'Проходная',
-    text: 'Описание проходной',
+    text: 'Фотография самой первой проходной завода',
     photo: 'assets/img/21.jpg',
     audio: 'assets/audio/gostiny.mp3',
     coords: { x: 28, y: 42 },
@@ -26,68 +26,77 @@ const SITES = [
     timeline: {
       1935: 'assets/img/21.jpg',
       1970: 'assets/img/3.jpg',
+      2015:'assets/img/22.JPG',
       2026: 'assets/img/23.jpg'
     }
   },
   {
-    id: 'cathedral',
-    title: 'Цех',
-    text: 'Описание цеха',
-    photo: 'assets/img/6.jpg',
+    id: 'ceh1',
+    title: 'Цех №32',
+    text: 'Приказ наркома обязывает обеспечить изготовление в первый месяц работы завода 50 тысяч винтовочных противотанковых гранат. Сделано.',
+    photo: 'assets/img/1.jpg',
     audio: 'assets/audio/cathedral.mp3',
     coords: { x: 55, y: 30 },
     archive: {
-      old: 'assets/img/cathedral_old.jpg',
-      now: 'assets/img/cathedral_now.jpg'
+      old: 'assets/img/1.jpg',
+      now: 'assets/img/24.jpg'
     },
     timeline: {
-      1935: 'assets/img/6.jpg',
-      1945: 'assets/img/23.jpg',
-      1970: 'assets/img/23.jpg',
-      2026: 'assets/img/23.jpg'
+      1935: 'assets/img/1.jpg',
+      1943: 'assets/img/2.jpg',
+      2023: 'assets/img/24.jpg'
     }
   },
   {
-    id: 'townhall',
-    title: 'Экспонаты',
-    text: 'Описание экспонатов',
+    id: 'ceh2',
+    title: 'Внедрение  новых мощностей',
+    text: 'В 1980-е годы растут мощности производства. Внедряются: 350 станков с программным управлением; 350 агрегатных и специальных станков; 350 автоматических и полуавтоматических стендов для контроля и испытаний; 350 механизированных установок; Кузнечный цех',
+    photo: 'assets/img/6.jpg',
+    audio: 'assets/audio/cathedral.mp3',
+    coords: { x: 55, y: 30 },
+  },
+  {
+    id: 'exp1',
+    title: 'Велосипед "Медвежонок" ',
+    text: 'В 1953 году завод № 32 начинает освоение трёхколёсных велосипедов «Медвежонок», в 1954 году изготав- ливает 100 тысяч штук для разных регионов страны. Стоимость такого велосипеда – 123 рубля. В то же время средняя зарплата по стране – 699 рублей, а стоимость 1 кг сливочного масла – 25 рублей.',
     photo: 'assets/img/12.jpg',
     audio: 'assets/audio/townhall.mp3',
     coords: { x: 70, y: 55 },
-    archive: {
-      old: 'assets/img/12.jpg',
-      now: 'assets/img/13.jpg'
-    },
-    timeline: {
-      1935: 'assets/img/12.jpg',
-      1970: 'assets/img/13.jpg',
-      2026: 'assets/img/15.jpg'
-    }
   },
   {
-    id: 'theatre',
-    title: 'Документы завода',
-    text: 'Описание документов завода',
+    id: 'docs1',
+    title: 'Орден Красной Звезды',
+    text: 'В 1940 году завод получает первую правительственную награду – орден Красной Звезды – за освоение и внедрение в короткие сроки новых образцов вооружения. В те времена заводов, награждённых орденами, в стране были единицы',
+    photo: 'assets/img/8.jpg',
+    audio: 'assets/audio/theatre.mp3',
+    coords: { x: 45, y: 70 },
+  },
+  {
+    id: 'docs2',
+    title: 'Орден Трудового Красного Знамени',
+    text: 'В 1945 году завод получает следующую правительственную награду – орден Трудового Красного Знамени – за выполнение задач, поставленных Государственным комитетом обороны',
     photo: 'assets/img/9.jpg',
     audio: 'assets/audio/theatre.mp3',
     coords: { x: 45, y: 70 },
-    archive: {
-      old: 'assets/img/9.jpg',
-      now: 'assets/img/8.jpg'
-    },
-    timeline: {
-      1935: 'assets/img/9.jpg',
-      1970: 'assets/img/8.jpg'
-    }
   },
-  {
-    id: 'zavod1',
-    title: 'Завод тест',
-    text: 'Описание тест',
-    photo: 'assets/img/23.jpg',
+{
+    id: 'prohodnaya',
+    title: 'Проходная',
+    text: 'Фотография самой первой проходной завода',
+    photo: 'assets/img/21.jpg',
     audio: 'assets/audio/gostiny.mp3',
     coords: { x: 28, y: 42 },
-  }
+    archive: {
+      old: 'assets/img/21.jpg',
+      now: 'assets/img/23.jpg'
+    },
+    timeline: {
+      1935: 'assets/img/21.jpg',
+      1970: 'assets/img/3.jpg',
+      2015:'assets/img/22.JPG',
+      2026: 'assets/img/23.jpg'
+    }
+  },
 ];
 
 /* Список годов для временной шкалы (можно менять) */

@@ -90,6 +90,21 @@ window.addEventListener('resize', () => {
 });
 
 /* ---------- Старт ---------- */
+function setSplit(val) {
+  // прилипание к краям
+  if (val <= 2)  val = 0;
+  if (val >= 98) val = 100;
+
+  const fullW = cmp.clientWidth;       // ширина всего контейнера
+  oldWrap.style.width = val + '%';     // двигаем шторку
+  oldImg.style.width  = fullW + 'px';  // фото = вся ширина, не сжимается
+  handle.style.left   = val + '%';
+}
+
+slider.addEventListener('input', () => setSplit(Number(slider.value)));
+window.addEventListener('resize', () => setSplit(Number(slider.value)));
+setSplit(Number(slider.value)); // инициализация
+
 buildSelect();
 // выбираем первый объект, у которого есть архив
 const firstIdx = SITES.findIndex(s => s.archive);
